@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 4832820010726384}
   - component: {fileID: 33353364087515666}
   - component: {fileID: 136942835992669780}
-  - component: {fileID: 114401134556078484}
+  - component: {fileID: 114476078821166962}
   - component: {fileID: 54533346132779600}
   m_Layer: 2
   m_Name: ForrestG
@@ -756,7 +756,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114401134556078484
+--- !u!114 &114476078821166962
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -764,10 +764,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1858977713270648}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90bdf4f37f7c15e44b05d1049924e72a, type: 3}
+  m_Script: {fileID: 11500000, guid: 20bc611719b6149849ba79519b0b2d8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fail: 0
+  myName: 
+  movement: 0
+  fitness: 0
+  ended: 0
+  stLap: 0
+  lap: {x: 1, y: 0}
+  inp: []
+  brain: 
+  adventurousness: 0
+  speed: 10
+  acceleration: 0
+  totalDistance: 0
 --- !u!136 &136942835992669780
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -790,6 +801,7 @@ SkinnedMeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -805,6 +817,7 @@ SkinnedMeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -851,6 +864,7 @@ SkinnedMeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -866,6 +880,7 @@ SkinnedMeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -912,6 +927,7 @@ SkinnedMeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -927,6 +943,7 @@ SkinnedMeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
