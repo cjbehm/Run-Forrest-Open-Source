@@ -97,9 +97,10 @@ public class lvlBuilder : MonoBehaviour {
         // 
         if (loading)
         {
+            string[] localData = saveFile.Split(',');
             for (int i = 0; i < t.Length; i++)
             {
-                t[i] = int.Parse(saveFile.Split(',')[i]);
+                t[i] = int.Parse(localData[i]);
             }
 
             data.AddRange(t);
