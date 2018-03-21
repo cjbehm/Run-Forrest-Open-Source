@@ -28,6 +28,7 @@ public class ctrl : MonoBehaviour {
     public InputField nfF;
     public Image sI, pI, cI;
     public ForrestCTRL F;
+    public Text fitnessList;
 
     public RectTransform[] rT;
     public Text[] inp;
@@ -917,7 +918,14 @@ public class ctrl : MonoBehaviour {
         // Loop through & assign all NNs a probability based on max above
 
         // 
-
+        allNN.Sort((x,y) => y.fitness.CompareTo(x.fitness));
+        string fitnesses = "";
+        foreach(NN net in allNN) {
+            fitnesses += Mathf.Round((float)net.fitness*100.0f)/100 + "\n";
+        }
+        if(fitnessList) {
+            fitnessList.text = fitnesses;
+        }
         // 
         if (CrossOver == COMode.Random)
         {
