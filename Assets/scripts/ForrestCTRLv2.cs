@@ -101,7 +101,7 @@ public class ForrestCTRLv2 : ForrestCTRL {
         Vector2 curPos = new Vector2(nextPos.x,nextPos.z);
         if(Visited(curPos,Time.fixedDeltaTime*(speed - 0.1f)))
         {
-            inp[inp.Length-2] = 0.0f;
+            inp[inp.Length-2] = 0 - adventurousness;
         }
         else
         {
