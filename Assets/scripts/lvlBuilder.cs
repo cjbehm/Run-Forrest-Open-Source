@@ -30,6 +30,19 @@ public class lvlBuilder : MonoBehaviour {
     GameObject hex;
     ctrl C;
 
+    string LoadDefaultMapToIfExists()
+    {
+        string levelData = "";
+        string levelPath = Path.Combine(Application.dataPath,"forrest.lvl");
+        if(File.Exists(levelPath))
+        {
+            StreamReader sr = new StreamReader(levelPath);
+            levelData = sr.ReadToEnd();
+            sr.Close();
+        }
+        return levelData;
+    }
+
     // Use this for initialization
     void Start ()
     {
@@ -80,6 +93,7 @@ public class lvlBuilder : MonoBehaviour {
 
     void GenHex(GameObject F)
     {
+        saveFile = LoadDefaultMapToIfExists();
         List<int> data = new List<int>();
 
         int[] t = new int[saveFile.Split(',').Length-1];
@@ -89,7 +103,7 @@ public class lvlBuilder : MonoBehaviour {
         string vectConv = saveFile.Split(',')[saveFile.Split(',').Length - 1];
 
         // 
-        if (SceneManager.GetActiveScene().name == "course")
+        if (SceneManager.GetActiveScene().name == "course" || saveFile != "")
         {
             startPt = new Vector4(float.Parse(vectConv.Split('#')[0]), float.Parse(vectConv.Split('#')[1]), float.Parse(vectConv.Split('#')[2]), float.Parse(vectConv.Split('#')[3]));
         }
@@ -121,7 +135,6 @@ public class lvlBuilder : MonoBehaviour {
                 lb.type = Type.block;
                 lb.id = id;
                 lb.perim = true;
-
             }
             id++;
 
@@ -246,7 +259,7 @@ public class lvlBuilder : MonoBehaviour {
                 // 
                 if (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
                 {
-                    saveB.interactable = (selHexx.Count > 5);
+                    saveB.interactable = (selHexx.Count > 5) || saveFile != "";
                 }
 
                 if (!Input.GetMouseButton(0))
@@ -297,15 +310,24 @@ public class lvlBuilder : MonoBehaviour {
     // 
     public void SaveLvl()
     {
-        saveFile = "";
-        for (int i = 0; i < selHexx.Count; i++)
-        {
-            saveFile += selHexx[i].GetComponent<lvlBuilder>().id + ((i < selHexx.Count - 1) ? "," : string.Empty);
+        if(saveFile == "") { 
+            saveFile = "";
+            for (int i = 0; i < selHexx.Count; i++)
+            {
+                saveFile += selHexx[i].GetComponent<lvlBuilder>().id + ((i < selHexx.Count - 1) ? "," : string.Empty);
+            }
+
+            saveFile+=string.Format(",{0}#{1}#{2}#{3}", stSave.x, stSave.y, stSave.z,S.transform.eulerAngles.y);
+
+            mP.lvlData = saveFile;
+
+            string levelFilePath = Path.Combine(Application.dataPath,"forrest.lvl");
+
+            StreamWriter sW = new StreamWriter(levelFilePath);
+
+            sW.Write(saveFile);
+            sW.Close();
         }
-
-        saveFile+=string.Format(",{0}#{1}#{2}#{3}", stSave.x, stSave.y, stSave.z,S.transform.eulerAngles.y);
-
-        mP.lvlData = saveFile;
 
         SceneManager.LoadScene("course");
 
