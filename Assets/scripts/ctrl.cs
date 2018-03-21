@@ -44,7 +44,7 @@ public class ctrl : MonoBehaviour {
     Image[] aRs;
     menuParams mP;
 
-	public int[] brainConfig = new int[] { 5, 4, 1 };
+	public int[] brainConfig;
 
     // 1, 2, 3, 4, 5
     GameObject[] graphs = new GameObject[2];
