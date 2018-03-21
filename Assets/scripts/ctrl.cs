@@ -13,7 +13,7 @@ public class ctrl : MonoBehaviour {
     public IntelMode intelli;
     public enum CamMode { Free, Track, POV, Follow, Top, Lock };
     public CamMode Camy;
-    public enum COMode { Random, Slice};
+    public enum COMode { Random, Slice, cjRandom};
     public COMode CrossOver;
     public enum SelMode { Percent, Top2};
     public SelMode selMode;
@@ -927,6 +927,73 @@ public class ctrl : MonoBehaviour {
         {
             SliceCrossOver(allNN);
         }
+        if (CrossOver == COMode.cjRandom)
+        {
+            cjRandom(allNN);
+        }
+
+    }
+
+    protected float[] mutate(float[] dna) {
+        for(int i = 0; i < dna.Length; i++)
+        {
+            if(Random.value < mutationProb) {
+                float mutAmount = Random.Range(-mutationRate,mutationRate);
+                dna[i] += mutAmount;
+            }
+        }
+        return dna;
+    }
+
+    protected float[] genesFromRandomSplice(NN parentOne, NN parentTwo)
+    {
+        float[] newGenes = new float[parentOne.geneSize];
+
+        float[] parentOneGenes = parentOne.GetBrain();
+        float[] parentTwoGenes = parentOne.GetBrain();
+
+        // splice
+        for(int i = 0; i < parentOneGenes.Length; i++) {
+            newGenes[i] = Random.value > 0.5f ? parentOneGenes[i] : parentTwoGenes[i];
+        }
+        return newGenes;
+    }
+
+    protected float[] randomGenes(int geneSize)
+    {
+        float[] genes = new float[geneSize];
+        for(int i = 0; i < genes.Length; i++)
+        {
+            genes[i] = RandomWeight();
+        }
+        return genes;
+    }
+
+    protected void cjRandom(List<NN> nets)
+    {
+        // sort descending order of fitness
+        nets.Sort((x,y) => y.fitness.CompareTo(x.fitness));
+        NN[] networks = nets.ToArray();
+
+        float[][] newDNA = new float[networks.Length][];
+
+        //top two survive
+        newDNA[0] = networks[0].GetBrain();
+        newDNA[1] = networks[1].GetBrain();
+
+        //bottom two are replaced by mutations of the top two
+        newDNA[networks.Length - 2] = mutate(networks[0].GetBrain());
+        newDNA[networks.Length - 1] = mutate(networks[1].GetBrain());
+
+        int randomParent;
+        // everyone one else is spliced with genes from one of the top two
+        for(int i = 2; i < networks.Length - 2; i++) {
+            randomParent = Random.Range(0, 1);
+            newDNA[i] = genesFromRandomSplice(networks[i],networks[randomParent]);
+            newDNA[i] = mutate(newDNA[i]);
+        }
+
+        attIniData = newDNA;
     }
 
     NN[] Get2ProbBrains(List<NN> allNN)
